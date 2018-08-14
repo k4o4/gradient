@@ -36,7 +36,7 @@
 	});
 
 	function drawGradient() {
-			gradient = 'linear-gradient(to right bottom, rgb(' + hslToRgb(increaseSaturation(increaseLightness(rgbToHsl(cp.value), 'L'), 'L')) + ') 20%, rgb(' + hslToRgb(increaseSaturation(increaseLightness(rgbToHsl(cp.value), 'R'), 'R')) + ') 80%)';
+		gradient = 'linear-gradient(to right bottom, rgb(' + hslToRgb(increaseSaturation(increaseLightness(rgbToHsl(cp.value), 'L'), 'L')) + ') 20%, rgb(' + hslToRgb(increaseSaturation(increaseLightness(rgbToHsl(cp.value), 'R'), 'R')) + ') 80%)';
 		textColor.value = cp.value;
 		oc.style.background = cp.value;
 		cb.style.background = gradient;
