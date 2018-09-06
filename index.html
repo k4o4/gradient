@@ -12,12 +12,21 @@
 
 <div id="colorBar"></div>
 
+<!--div id="fakeLabel">
+	<div id="labelText">Chat with us</div>
+	<svg xmlns="http://www.w3.org/2000/svg" width="22" height="33" viewBox="0 0 22 33">
+    <path fill="#18c139" fill-rule="evenodd" d="M0-.018c12.635 3.131 22 14.546 22 28.15v4.886C9.365 29.887 0 18.472 0 4.868V-.017z"></path>
+</svg>
+
+</div-->
+
 
 <script type="text/javascript">
 	var cp = document.getElementById('cp');
 	var cb = document.getElementById('colorBar');
 	var oc = document.getElementById('originalColor');
 	var textColor = document.getElementById('RGBcolor'); 
+	var fl = document.getElementById('fakeLabel'); 
 
 	var hueL = 0;
 	var saturationL = 10;
@@ -40,6 +49,8 @@
 		textColor.value = cp.value;
 		oc.style.background = cp.value;
 		cb.style.background = gradient;
+		fl.style.background = gradient;
+		jivo_api.setWidgetColor('#fff', '#eee')
 	}
 
 	function increaseHue(hsl, position) {
@@ -115,6 +126,16 @@
 		return [ r * 255, g * 255, b * 255 ];
 	}
 
+
+	function toHex(n) {
+	    n = parseInt(n, 10);
+	    if (isNaN(n)) return '00';
+	    n = Math.max(0, Math.min(n, 255));
+	    return '0123456789ABCDEF'.charAt((n - n % 16) / 16) + '0123456789ABCDEF'.charAt(n % 16);
+	}
+
+
+
 </script>
 <style type="text/css">
 	#colorBar {
@@ -129,6 +150,33 @@
 		top: 17px;
 		width: 300px;
 	}
+	#fakeLabel {
+		border-top-right-radius: 30px;
+		box-shadow: 0 12px 14px 8px rgba(0, 0, 0, 0.17);
+		height: 40px;
+		margin: auto;
+		position: relative;
+		top: 100px;
+		width: 325px;
+	}
+	#fakeLabel > svg {
+		margin-left: 303px;
+	}
 </style>
+
+
+<iframe src="" height="400px" width="200px">
+<!-- BEGIN JIVOSITE CODE {literal} -->
+<script type='text/javascript'>
+(function(){ var widget_id = 'h7BIDQFFnu';var d=document;var w=window;function l(){var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true;s.src = '//code.aprv2.dev.jivosite.com/script/widget/'+widget_id; var ss = document.getElementsByTagName('script')[0]; ss.parentNode.insertBefore(s, ss);}if(d.readyState=='complete'){l();}else{if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+</script>
+<!-- {/literal} END JIVOSITE CODE -->
+
+</iframe>
+
+
+
+
+
 </body>
 </html>
