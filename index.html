@@ -47,8 +47,8 @@
 	});
 
 	function drawGradient() {
-		var leftColor = rgbToHex(hslToRgb(increaseSaturation(increaseLightness(rgbToHsl(cp.value), 'L'), 'L')));
-		var rightColor = rgbToHex(hslToRgb(increaseSaturation(increaseLightness(rgbToHsl(cp.value), 'R'), 'R')));
+		leftColor = rgbToHex(hslToRgb(increaseSaturation(increaseLightness(rgbToHsl(cp.value), 'L'), 'L')));
+		rightColor = rgbToHex(hslToRgb(increaseSaturation(increaseLightness(rgbToHsl(cp.value), 'R'), 'R')));
 		gradient = 'linear-gradient(to right bottom, ' + leftColor + ' 20%, ' + rightColor + ' 80%)';
 		console.log(gradient);
 		textColor.value = cp.value;
