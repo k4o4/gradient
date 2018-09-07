@@ -38,6 +38,11 @@
 
 
 <script type="text/javascript">
+
+	document.getElementsByTagName('form')[0].onsubmit = function(e) {e.preventDefault();}
+	document.getElementsByTagName('form')[1].onsubmit = function(e) {e.preventDefault();}
+
+
 	var cp = document.getElementById('cp');
 	var cb = document.getElementById('colorBar');
 	var oc = document.getElementById('originalColor');
@@ -59,8 +64,6 @@
 
 	drawGradient();
 	cp.addEventListener('change', drawGradient);
-	cp.addEventListener('change', drawGradient);
-	cp.addEventListener('change', drawGradient);
 	textColor.addEventListener('change', function(){
 		cp.value = textColor.value;
 		drawGradient();
@@ -80,12 +83,12 @@
 			sc.value = rightColor;
 		}
 		gradient = 'linear-gradient(95deg, ' + leftColor + ' 20%, ' + rightColor + ' 80%)';
-		console.log(gradient);
 		textColor.value = cp.value;
 		oc.style.background = cp.value;
 		cb.style.background = gradient;
 		fl.style.background = gradient;
 		if(window['jivo_api']) jivo_api.setWidgetColor(leftColor, rightColor);
+		console.log('draw gradient: ', leftColor, rightColor);
 	}
 
 	function increaseHue(hsl, position) {
@@ -165,7 +168,6 @@
 		var r = toHex(rgb[0]);
 		var g = toHex(rgb[1]);
 		var b = toHex(rgb[2]);
-		console.log('#' + r + g + b);
 		return('#' + r + g + b);
 
 	}
