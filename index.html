@@ -5,17 +5,34 @@
 </head>
 <body>
 
-<label>Original Color:</label><input type="color" name="color1" id="cp" value="#142feb">
-<input type="text" name="RGBcolor" id="RGBcolor">
-<div id="originalColor"></div><br>
+<label id="oc">Original Color:</label>
+<input type="text" class="colorInput" name="RGBcolor" id="RGBcolor"><input type="color" name="color1" id="cp" value="#142feb">
+<div id="originalColor"></div><br><br><br>
+<label>Color 2:</label>
+<input type="text" class="colorInput" name="RGBcolor" id="RGBcolor2">
+<div id="secondColor"></div><br>
 <br><br>
 
+<form>
+	<label>Saturation</label>
+	<div class="value-button" id="decrease1" onclick="decreaseValue(1)" value="Decrease Value">-</div>
+	<input type="number" id="number1" value="20" />
+	<div class="value-button" id="increase1" onclick="increaseValue(1)" value="Increase Value">+</div>
+</form>
+<form>
+	<label> Lightness</label>
+	<div class="value-button" id="decrease2" onclick="decreaseValue(2)" value="Decrease Value">-</div>
+	<input type="number" id="number2" value="20" />
+	<div class="value-button" id="increase2" onclick="increaseValue(2)" value="Increase Value">+</div>
+</form>
+
+<br><br>
 <div id="colorBar"></div>
 
 <div id="fakeLabel">
 	<div id="labelText">Chat with us, we are online!</div>
 	<svg xmlns="http://www.w3.org/2000/svg" width="22" height="33" viewBox="0 0 22 33">
-    <path fill="#18c139" fill-rule="evenodd" d="M0-.018c12.635 3.131 22 14.546 22 28.15v4.886C9.365 29.887 0 18.472 0 4.868V-.017z"></path>
+		<path fill="#18c139" fill-rule="evenodd" d="M0-.018c12.635 3.131 22 14.546 22 28.15v4.886C9.365 29.887 0 18.472 0 4.868V-.017z"></path>
 </svg>
 
 </div>
@@ -25,31 +42,45 @@
 	var cp = document.getElementById('cp');
 	var cb = document.getElementById('colorBar');
 	var oc = document.getElementById('originalColor');
+	var sc = document.getElementById('RGBcolor2');
 	var textColor = document.getElementById('RGBcolor'); 
+	var textColor2 = document.getElementById('RGBcolor2'); 
 	var fl = document.getElementById('fakeLabel'); 
 	var leftColor;
 	var rightColor;
 
-	var hueL = 0;
-	var saturationL = 10;
-	var lightnessL = 10;
+	/*var hueL = 0;
+	var saturationL = 0;
+	var lightnessL = 0;*/
 
-	var hueR = 0;
-	var saturationR = -10;
-	var lightnessR = -10;
+	var hue = 0;
+	var saturation = number1.value;
+	var lightness = number2.value;
 
 
 	drawGradient();
+	cp.addEventListener('change', drawGradient);
+	cp.addEventListener('change', drawGradient);
 	cp.addEventListener('change', drawGradient);
 	textColor.addEventListener('change', function(){
 		cp.value = textColor.value;
 		drawGradient();
 	});
+	sc.addEventListener('change', function(){
+		drawGradient(sc.value);
+	});
 
-	function drawGradient() {
-		leftColor = rgbToHex(hslToRgb(increaseSaturation(increaseLightness(rgbToHsl(cp.value), 'L'), 'L')));
-		rightColor = rgbToHex(hslToRgb(increaseSaturation(increaseLightness(rgbToHsl(cp.value), 'R'), 'R')));
-		gradient = 'linear-gradient(to right bottom, ' + leftColor + ' 20%, ' + rightColor + ' 80%)';
+	function drawGradient(color2) {
+		saturation = number1.value;
+		lightness = number2.value;
+		leftColor = cp.value;
+		if(color2) {
+			rightColor = color2;
+		} else {
+			rightColor = rgbToHex(hslToRgb(increaseSaturation(increaseLightness(rgbToHsl(cp.value)))));
+			sc.value = rightColor;
+		}
+		gradient = 'linear-gradient(95deg, ' + leftColor + ' 20%, ' + rightColor + ' 80%)';
 		console.log(gradient);
 		textColor.value = cp.value;
 		oc.style.background = cp.value;
@@ -63,13 +94,13 @@
 		return hsl;
 	}	
 
-	function increaseSaturation(hsl, position) {
-		hsl[1] += window['saturation' + position]/100;
+	function increaseSaturation(hsl) {
+		hsl[1] += saturation/100;
 		return hsl;
 	}	
 
-	function increaseLightness(hsl, position) {
-		hsl[2] += window['lightness' + position]/100;
+	function increaseLightness(hsl) {
+		hsl[2] += lightness/100;
 		return hsl;
 	}
 
@@ -141,16 +172,38 @@
 	}
 
 	function toHex(n) {
-	    n = parseInt(n, 10);
-	    if (isNaN(n)) return '00';
-	    n = Math.max(0, Math.min(n, 255));
-	    return '0123456789ABCDEF'.charAt((n - n % 16) / 16) + '0123456789ABCDEF'.charAt(n % 16);
+			n = parseInt(n, 10);
+			if (isNaN(n)) return '00';
+			n = Math.max(0, Math.min(n, 255));
+			return '0123456789ABCDEF'.charAt((n - n % 16) / 16) + '0123456789ABCDEF'.charAt(n % 16);
 	}
 
 	jivo_onLoadCallback = function() {
-		jivo_api.showProactiveInvitation('Hello! How may I help you?');
+		jivo_api.showProactiveInvitation('Hello 👋 \n How may I help you?');
 		drawGradient();
 	}
+
+
+
+	/* input */
+
+	function increaseValue(input) {
+		var value = parseInt(document.getElementById('number' + input).value, 10);
+		value = isNaN(value) ? 0 : value;
+		value++;
+		document.getElementById('number' + input).value = value;
+		drawGradient();
+	}
+
+	function decreaseValue(input) {
+		var value = parseInt(document.getElementById('number' + input).value, 10);
+		value = isNaN(value) ? 0 : value;
+		value < 1 ? value = 1 : '';
+		value--;
+		document.getElementById('number' + input).value = value;
+		drawGradient();
+	}	
+
 
 
 </script>
@@ -162,19 +215,20 @@
 	#originalColor {
 		display: inline-block;
 		height: 30px;
-		margin-left: 20px;
-		position: relative;
+		left: 360px;
+		position: absolute;
 		top: 17px;
 		width: 300px;
 	}
 	#fakeLabel {
 		border-top-left-radius: 8px;
 		border-top-right-radius: 28px;
+		bottom: 0px;
 		box-shadow: 0 12px 14px 8px rgba(0, 0, 0, 0.17);
 		height: 40px;
 		margin: auto;
-		position: relative;
-		top: 100px;
+		position: fixed;
+		right: 450px;
 		width: 325px;
 	}
 	#fakeLabel > svg {
@@ -191,6 +245,86 @@
 	jdiv[style^="position: fixed;"] {
 		display: none;
 	}
+
+	.colorInput {
+		position: absolute;
+		left: 120px;
+	}
+
+	#RGBcolor {
+		top: 20px;
+	}
+
+	#cp {
+		left: 300px;
+		position: absolute;
+		top: 20px;
+	}
+
+	#oc {
+		position: relative;
+		top: 13px;
+	}
+
+
+/*inputs*/
+	form {
+		width: 300px;
+		margin: 0 auto;
+		text-align: center;
+		padding-top: 50px;
+	}
+
+	.value-button {
+		display: inline-block;
+		border: 1px solid #ddd;
+		margin: 0px;
+		width: 40px;
+		height: 20px;
+		text-align: center;
+		vertical-align: middle;
+		padding: 11px 0;
+		background: #eee;
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+
+	.value-button:hover {
+		cursor: pointer;
+	}
+
+	div[id^="decrease"] {
+		margin-right: -4px;
+		border-radius: 8px 0 0 8px;
+	}
+
+	div[id^="increase"] {
+		margin-left: -4px;
+		border-radius: 0 8px 8px 0;
+	}
+
+	input[id^="number"] {
+		text-align: center;
+		border: none;
+		border-top: 1px solid #ddd;
+		border-bottom: 1px solid #ddd;
+		margin: 0px;
+		width: 40px;
+		height: 40px;
+	}
+
+	input[type=number]::-webkit-inner-spin-button,
+	input[type=number]::-webkit-outer-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+	}
+
+
+
 </style>
 
 <!-- BEGIN JIVOSITE CODE {literal} -->
