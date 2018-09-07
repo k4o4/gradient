@@ -27,6 +27,8 @@
 	var oc = document.getElementById('originalColor');
 	var textColor = document.getElementById('RGBcolor'); 
 	var fl = document.getElementById('fakeLabel'); 
+	var leftColor;
+	var rightColor;
 
 	var hueL = 0;
 	var saturationL = 10;
@@ -186,7 +188,7 @@
 		position: absolute;
 
 	}
-	jdiv.global_globalClass:last-child {
+	jdiv[style^="position: fixed;"] {
 		display: none;
 	}
 </style>
