@@ -39,8 +39,8 @@
 
 <script type="text/javascript">
 
-	document.getElementsByTagName('form')[0].onsubmit = function(e) {e.preventDefault();}
-	document.getElementsByTagName('form')[1].onsubmit = function(e) {e.preventDefault();}
+	//document.getElementsByTagName('form')[0].onsubmit = function(e) {e.preventDefault(); drawGradient();}
+	//document.getElementsByTagName('form')[1].onsubmit = function(e) {e.preventDefault(); drawGradient();}
 
 
 	var cp = document.getElementById('cp');
@@ -69,10 +69,10 @@
 		drawGradient();
 	});
 	sc.addEventListener('change', function(){
-		drawGradient(sc.value);
+		drawGradient(e, sc.value);
 	});
 
-	function drawGradient(color2) {
+	function drawGradient(e, color2) {
 		saturation = number1.value;
 		lightness = number2.value;
 		leftColor = cp.value;
